@@ -1,2 +1,2 @@
-# NKN-SDK-Documentation
-Concise documentation on all the flavors of NKN, ranging GoLang to Android 
+# NKN SDK Documentation
+This documentation includes the JavaScript, Java, and Go SDKs for NKN.
