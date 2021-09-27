@@ -246,3 +246,83 @@ Check out for [complete examples](https://github.com/nknorg/nkn-sdk-js/blob/mast
 
 ## Wallet
 
+NKN Wallet SDK.
+
+Create a new wallet with a generated key pair:
+
+```javascript
+let wallet = new nkn.Wallet({ password: 'password' });
+```
+
+Create wallet from a secret seed:
+
+```javascript
+let wallet = new nkn.Wallet({
+  seed: wallet.getSeed(),
+  password: 'new-wallet-password',
+});
+```
+
+Export wallet to JSON string:
+
+```javascript
+let walletJson = wallet.toJSON();
+```
+
+Load wallet from JSON and password:
+
+```javascript
+let wallet = nkn.Wallet.fromJSON(walletJson, { password: 'password' });
+```
+
+By default the wallet will use RPC server provided by nkn.org. Any NKN full node can serve as a RPC server. You can create a wallet using customized RPC server:
+
+```javascript
+let wallet = new nkn.Wallet({
+  password: 'password',
+  rpcServerAddr: 'https://ip:port',
+});
+```
+
+Verify whether an address is a valid NKN wallet address:
+
+```javascript
+console.log(nkn.Wallet.verifyAddress(wallet.address));
+```
+
+Verify password of the wallet:
+
+```javascript
+console.log(wallet.verifyPassword('password'));
+```
+
+Get balance of this wallet:
+
+```javascript
+wallet.getBalance().then((value) => {
+  console.log('Balance for this wallet is:', value.toString());
+});
+```
+
+Transfer token to another wallet address:
+
+```javascript
+wallet.transferTo(wallet.address, 1, { fee: 0.1, attrs: 'hello world' }).then((txnHash) => {
+  console.log('Transfer transaction hash:', txnHash);
+});
+```
+
+Subscribe to a topic for this wallet for next 100 blocks (around 20 seconds per block), client using the same key pair (seed) as this wallet and same identifier as passed to subscribe will be able to receive messages from this topic:
+
+```javascript
+wallet.subscribe('topic', 100, 'identifier', 'metadata', { fee: '0.1' }).then((txnHash) => {
+  console.log('Subscribe transaction hash:', txnHash);
+});
+```
+
+You can also check for [complete examples](https://github.com/nknorg/nkn-sdk-js/blob/master/examples/wallet.js) and  for [full documentation](https://docs.nkn.org/nkn-sdk-js).
+
+
+## Random bytes generation
+
+
