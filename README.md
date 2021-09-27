@@ -621,13 +621,13 @@ txnHash, err = wallet.Unsubscribe("identifier", "topic", nil)
 
 This library is designed to work with [gomobile](https://godoc.org/golang.org/x/mobile/cmd/gomobile) and run natively on iOS/Android without any modification. You can use ```gomobile bind``` to compile it to Objective-C framework for iOS:
 
-```objective-c
+```c
 gomobile bind -target=ios -ldflags "-s -w" github.com/nknorg/nkn-sdk-go github.com/nknorg/ncp-go github.com/nknorg/nkn/v2/transaction
 ```
 
 and Java AAR for Android:
 
-```java
+```kotlin
 gomobile bind -target=android -ldflags "-s -w" github.com/nknorg/nkn-sdk-go github.com/nknorg/ncp-go github.com/nknorg/nkn/v2/transaction
 ```
 
