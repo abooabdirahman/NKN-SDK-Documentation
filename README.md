@@ -639,5 +639,43 @@ gomobile bind -target=android -ldflags "-s -w" github.com/nknorg/nkn-sdk-go gith
 It's recommended to use the latest version of gomobile that supports go modules.
 
 
+# NKN SDK for Java/Kotlin/JVM
 
+Java implementation of NKN sdk.
+
+Send and receive messages between any NKN clients.
+
+**This is a work in progress, most things are subject to change!**
+
+## Where to start?
+
+There is [wiki documentation](https://github.com/RealJohnSmith/nkn-java-sdk/wiki) of the client.
+
+You can also have a look at the [examples](https://github.com/nknorg/nkn-java-sdk/blob/master/examples/src/main/java/jsmith/nknskd/examples) for basic introduction to API. Explore classes mentioned in examples
+
+### Installation
+
+- Install java8 or bigger
+
+- Clone repository to a local folder
+
+- Type ```./wemi <ExampleName>/run```
+
+Substitute <ExampleName> for any of the prepared examples:
+  
+- ```SimpleExample``` Contains simple unicast message send and receive, response; with an option to opt-out of the end2end encryption scheme.
+  
+- ```DropBenchmarkExample``` Leftover test of message drops, from ancient times when sending messages was a lot less reliable
+
+- ```MulticastExample``` Broadcast messages to multiple clients at the same time, including ACK/Response handling
+
+- ```WalletExample``` Demonstration of generating, saving and loading a wallet. Including explorer queries for balance and wallet transaction to register a name or transfer assets to a different wallet
+
+- ```PubSubExample``` Sub transactions, pub message broadcast and receiving.
+  
+For more information about ```wemi``` build system, visit [GitHub page](https://github.com/Darkyenus/wemi)
+
+### How to integrate to other projects?
+  
+Add a dependency to a build system of your liking. Make sure to use ```https://jitpack.io``` resolver and ```com.github.nknorg:nkn-java-sdk:0.1.1``` locator
 
