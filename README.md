@@ -1,5 +1,5 @@
 # NKN SDK Documentation
-This documentation includes the [JavaScript](https://github.com/abooabdirahman/NKN-SDK-Documentation/blob/main/README.md#nkn-sdk-js), [Go](https://github.com/abooabdirahman/NKN-SDK-Documentation/blob/main/README.md#nkn-sdk-go), and [Java]() SDKs implimentations for NKN.
+This documentation includes the [JavaScript](https://github.com/abooabdirahman/NKN-SDK-Documentation/blob/main/README.md#nkn-sdk-js), [Go](https://github.com/abooabdirahman/NKN-SDK-Documentation/blob/main/README.md#nkn-sdk-go), and [Java](https://github.com/abooabdirahman/NKN-SDK-Documentation/blob/main/README.md#nkn-sdk-for-javakotlinjvm) SDKs implimentations for NKN.
 
 So let's start off with the JavaScript.
 
@@ -29,79 +29,6 @@ import nkn from 'nkn-sdk';
 For browser, use ```dist/nkn.js``` or ```dist/nkn.min.js```.
 
 For environment where cryptographically secure random number generator is not natively implemented (e.g. React Native), see [Random bytes generation]().
-
-## MultiClient
-MultiClient creates multiple NKN client instances by adding identifier prefix (```__0__.```, ```__1__.```, ```__2__.```, ...) to a NKN address and sends or receives packets concurrently. This will greatly increase reliability and reduce latency at the cost of more bandwidth usage (proportional to the number of clients).
-
-MultiClient basically has the same API as [client](), with a few additional initial configurations and session mode:
-
-```javascript
-let multiclient = new nkn.MultiClient({
-  numSubClients: 4,
-  originalClient: false,
-});
-```
-
-where ```originalClient``` controls whether a client with original identifier (without adding any additional identifier prefix) will be created, and ```numSubClients``` controls how many sub-clients to create by adding prefix ```__0__.```, ```__1__.```, ```__2__.```, etc. Using ```originalClient: true``` and ```numSubClients: 0``` is equivalent to using a standard NKN Client without any modification to the identifier. Note that if you use ```originalClient: true``` and ```numSubClients``` is greater than 0, your identifier should not starts with ```__X__``` where X is any number, otherwise you may end up with identifier collision.
-
-Any additional options will be passed to NKN client.
-
-MultiClient instance shares most of the public API as regular NKN [client](), see client for usage and examples. If you need low-level property or API, you can use ```multiclient.defaultClient``` to get the default client and ```multiclient.clients``` to get all clients.
-
-And do Check out [complete examples](https://github.com/nknorg/nkn-sdk-js/blob/master/examples/client.js).
-
-Also, check out the [full documentation](https://docs.nkn.org/nkn-sdk-js).
-
-
-### Session
-
-In addition to the default packet mode, multiclient also supports session mode, a reliable streaming protocol similar to TCP based on [ncp](https://github.com/nknorg/ncp-js).
-
-Listens for incoming sessions (without ```listen()``` no sessions will be accepted):
-
-```multiclient.listen();```
-
-Dial a session:
-
-```javascript
-multiclient.dial('another-client-address').then((session) => {
-  console.log(session.localAddr, 'dialed a session to', session.remoteAddr);
-});
-```
-
-Accepts for incoming sessions:
-```javascript
-multiclient.onSession((session) => {
-  console.log(session.localAddr, 'accepted a session from', session.remoteAddr);
-});
-```
-
-Write to session:
-
-```javascript
-session.write(Uint8Array.from([1,2,3,4,5])).then(() => {
-  console.log('write success');
-});
-```
-
-Read from session:
-
-```javascript
-session.read().then((data) => {
-  console.log('read', data);
-});
-```
-
-```session.read``` also accepts a ```maxSize``` parameter, e.g. ```session.read(maxSize)```. If ```maxSize > 0```, at most maxSize bytes will be returned. If ```maxSize == 0``` or not set, the first batch of received data will be returned. If ```maxSize < 0```, all received data will be concatenated and returned together.
-
-Session can be converted to WebStream using ```session.getReadableStream()``` and ```session.getWritableStream(closeSessionOnEnd = false)```. Note that WebStream is not fully supported by all browser, so you might need to polyfill it globally or ```setting session.ReadableStream``` and ```session.WritableStream``` constructors.
-
-Check out for [complete example](https://github.com/nknorg/nkn-sdk-js/blob/master/examples/session.js) on this. 
-
-Or try out the demo file transfer [web app](https://nftp.nkn.org).  
-
-And you can peek at its [source code](https://github.com/nknorg/nftp-js) on github.
-
 
 ## Client
 NKN client provides the basic functions of sending and receiving data between NKN clients or topics regardless their network condition without setting up a server or relying on any third party services. Typically you might want to use [multiclient]() instead of using client directly.
@@ -243,6 +170,79 @@ client.send(
 ```
 
 Check out for [complete examples](https://github.com/nknorg/nkn-sdk-js/blob/master/examples/client.js) and  [full documentation](https://docs.nkn.org/nkn-sdk-js).
+
+## MultiClient
+MultiClient creates multiple NKN client instances by adding identifier prefix (```__0__.```, ```__1__.```, ```__2__.```, ...) to a NKN address and sends or receives packets concurrently. This will greatly increase reliability and reduce latency at the cost of more bandwidth usage (proportional to the number of clients).
+
+MultiClient basically has the same API as [client](), with a few additional initial configurations and session mode:
+
+```javascript
+let multiclient = new nkn.MultiClient({
+  numSubClients: 4,
+  originalClient: false,
+});
+```
+
+where ```originalClient``` controls whether a client with original identifier (without adding any additional identifier prefix) will be created, and ```numSubClients``` controls how many sub-clients to create by adding prefix ```__0__.```, ```__1__.```, ```__2__.```, etc. Using ```originalClient: true``` and ```numSubClients: 0``` is equivalent to using a standard NKN Client without any modification to the identifier. Note that if you use ```originalClient: true``` and ```numSubClients``` is greater than 0, your identifier should not starts with ```__X__``` where X is any number, otherwise you may end up with identifier collision.
+
+Any additional options will be passed to NKN client.
+
+MultiClient instance shares most of the public API as regular NKN [client](), see client for usage and examples. If you need low-level property or API, you can use ```multiclient.defaultClient``` to get the default client and ```multiclient.clients``` to get all clients.
+
+And do Check out [complete examples](https://github.com/nknorg/nkn-sdk-js/blob/master/examples/client.js).
+
+Also, check out the [full documentation](https://docs.nkn.org/nkn-sdk-js).
+
+
+### Session
+
+In addition to the default packet mode, multiclient also supports session mode, a reliable streaming protocol similar to TCP based on [ncp](https://github.com/nknorg/ncp-js).
+
+Listens for incoming sessions (without ```listen()``` no sessions will be accepted):
+
+```multiclient.listen();```
+
+Dial a session:
+
+```javascript
+multiclient.dial('another-client-address').then((session) => {
+  console.log(session.localAddr, 'dialed a session to', session.remoteAddr);
+});
+```
+
+Accepts for incoming sessions:
+```javascript
+multiclient.onSession((session) => {
+  console.log(session.localAddr, 'accepted a session from', session.remoteAddr);
+});
+```
+
+Write to session:
+
+```javascript
+session.write(Uint8Array.from([1,2,3,4,5])).then(() => {
+  console.log('write success');
+});
+```
+
+Read from session:
+
+```javascript
+session.read().then((data) => {
+  console.log('read', data);
+});
+```
+
+```session.read``` also accepts a ```maxSize``` parameter, e.g. ```session.read(maxSize)```. If ```maxSize > 0```, at most maxSize bytes will be returned. If ```maxSize == 0``` or not set, the first batch of received data will be returned. If ```maxSize < 0```, all received data will be concatenated and returned together.
+
+Session can be converted to WebStream using ```session.getReadableStream()``` and ```session.getWritableStream(closeSessionOnEnd = false)```. Note that WebStream is not fully supported by all browser, so you might need to polyfill it globally or ```setting session.ReadableStream``` and ```session.WritableStream``` constructors.
+
+Check out for [complete example](https://github.com/nknorg/nkn-sdk-js/blob/master/examples/session.js) on this. 
+
+Or try out the demo file transfer [web app](https://nftp.nkn.org).  
+
+And you can peek at its [source code](https://github.com/nknorg/nftp-js) on github.
+
 
 ## Wallet
 
