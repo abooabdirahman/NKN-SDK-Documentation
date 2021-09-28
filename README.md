@@ -673,7 +673,7 @@ Substitute <ExampleName> for any of the prepared examples:
 
 - ```PubSubExample``` Sub transactions, pub message broadcast and receiving.
   
-For more information about ```wemi``` build system, visit [GitHub page](https://github.com/Darkyenus/wemi)
+For more information about ```wemi``` build system, visit the [GitHub page](https://github.com/Darkyenus/wemi)
 
 ### How to integrate to other projects?
   
