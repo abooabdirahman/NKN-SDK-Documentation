@@ -349,9 +349,14 @@ nkn.setPRNG(function(x, n) {
 Note that ```setPRNG``` completely _replaces_ internal random byte generator with the one provided.
 
 
-# NKN SDK for Java/Kotlin/JVM
+# NKN-SDK-Go
 
-Go implementation of NKN client and wallet SDK consists three components same as JS above.
+Go implementation of NKN client and wallet SDK consists three components same as JS above:
+
+1.  [NKN MultiClient](): Send and receive data using multiple NKN clients concurrently to improve reliability and latency. In addition, it supports session mode, a reliable streaming protocol similar to TCP based on [ncp](https://github.com/nknorg/ncp-js).
+2.  [NKN Client](): Send and receive data for free between any NKN clients regardless their network condition without setting up a server or relying on any third party services. Data are end to end encrypted by default. Typically you might want to use [multiclient]() instead of using client directly.
+Check out more details in the [Documentation](https://docs.nkn.org/nkn-sdk-js)
+3. [NKN Wallet](): Wallet SDK for [NKN blockchain](https://github.com/nknorg/nkn). It can be used to create wallet, transfer token to NKN wallet address, register name, subscribe to topic, and many other.
 
 ## Usage
 
@@ -632,3 +637,7 @@ gomobile bind -target=android -ldflags "-s -w" github.com/nknorg/nkn-sdk-go gith
 ```
 
 It's recommended to use the latest version of gomobile that supports go modules.
+
+
+
+
