@@ -1,5 +1,5 @@
 # NKN SDK Documentation
-This documentation includes the [JavaScript](), [Go](), and [Java]() SDKs implimentations for NKN.
+This documentation includes the [JavaScript](https://github.com/abooabdirahman/NKN-SDK-Documentation/blob/main/README.md#nkn-sdk-js), [Go](), and [Java]() SDKs implimentations for NKN.
 
 So let's start off with the JavaScript.
 
