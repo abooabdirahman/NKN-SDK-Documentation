@@ -28,7 +28,7 @@ import nkn from 'nkn-sdk';
 ```
 For browser, use ```dist/nkn.js``` or ```dist/nkn.min.js```.
 
-For environment where cryptographically secure random number generator is not natively implemented (e.g. React Native), see [Random bytes generation]().
+For environment where cryptographically secure random number generator is not natively implemented (e.g. React Native), see [Random bytes generation](https://github.com/abooabdirahman/NKN-SDK-Documentation/blob/main/README.md#random-bytes-generation).
 
 ## Client
 NKN client provides the basic functions of sending and receiving data between NKN clients or topics regardless their network condition without setting up a server or relying on any third party services. Typically you might want to use [multiclient]() instead of using client directly.
